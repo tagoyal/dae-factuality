@@ -1,5 +1,5 @@
 # dae-factuality
-
+Code for paper "Evaluating Factuality in Generation with Dependency-level Entailment" https://arxiv.org/pdf/2010.05478.pdf
 (detailed readme will be updated soon)
 
 # Models and Data
