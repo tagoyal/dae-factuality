@@ -40,7 +40,7 @@ def set_seed(args):
     torch.cuda.manual_seed_all(args.seed)
 
 
-def save_checkpoints(args, output_dir, model, tokenizer, optimizer, scheduler):
+def save_checkpoints(args, output_dir, model, tokenizer):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     model_to_save = (
@@ -51,10 +51,6 @@ def save_checkpoints(args, output_dir, model, tokenizer, optimizer, scheduler):
 
     torch.save(args, os.path.join(output_dir, "training_args.bin"))
     logger.info("Saving model checkpoint to %s", output_dir)
-
-    torch.save(optimizer.state_dict(), os.path.join(output_dir, "optimizer.pt"))
-    torch.save(scheduler.state_dict(), os.path.join(output_dir, "scheduler.pt"))
-    logger.info("Saving optimizer and scheduler states to %s", output_dir)
 
 
 def compute_metrics_intermediate(preds, gold):
@@ -201,16 +197,6 @@ def train(args, train_dataset, model: PreTrainedModel, tokenizer: PreTrainedToke
         optimizer, num_warmup_steps=args.warmup_steps, num_training_steps=t_total
     )
 
-    # Check if saved optimizer or scheduler states exist
-    if (
-            args.model_name_or_path
-            and os.path.isfile(os.path.join(args.model_name_or_path, "optimizer.pt"))
-            and os.path.isfile(os.path.join(args.model_name_or_path, "scheduler.pt"))
-    ):
-        # Load in optimizer and scheduler states
-        optimizer.load_state_dict(torch.load(os.path.join(args.model_name_or_path, "optimizer.pt")))
-        scheduler.load_state_dict(torch.load(os.path.join(args.model_name_or_path, "scheduler.pt")))
-
     # Train!
     logger.info("***** Running training *****")
     logger.info("  Num examples = %d", len(train_dataset))
@@ -321,13 +307,13 @@ def train(args, train_dataset, model: PreTrainedModel, tokenizer: PreTrainedToke
                     result = evaluate(args, model, tokenizer)
                     results.update(result)
 
-                    save_checkpoints(args, args.output_dir, model, tokenizer, optimizer, scheduler)
+                    save_checkpoints(args, args.output_dir, model, tokenizer)
 
                     if result['acc'] > acc_prev:
                         acc_prev = result['acc']
                         # Save model checkpoint best
                         output_dir = os.path.join(args.output_dir, "model-best")
-                        save_checkpoints(args, output_dir, model, tokenizer, optimizer, scheduler)
+                        save_checkpoints(args, output_dir, model, tokenizer)
 
             if 0 < args.max_steps < global_step:
                 epoch_iterator.close()
