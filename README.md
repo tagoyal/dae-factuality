@@ -1,4 +1,7 @@
 # dae-factuality
+
+**UPDATE: Models in this repo measure factuality for single sentence source sentences. For longer source docuemnts (e.g. XSum/CnnDm articles), please refer to our follow-up work https://github.com/tagoyal/factuality-datasets**
+
 Code for paper "Evaluating Factuality in Generation with Dependency-level Entailment" https://arxiv.org/pdf/2010.05478.pdf
 
 Environment base is Python 3.6. Also see requirements.txt. We used Stanford CoreNLP version 3.9.1.
