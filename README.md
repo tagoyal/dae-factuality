@@ -7,7 +7,7 @@ Code for paper "Evaluating Factuality in Generation with Dependency-level Entail
 Environment base is Python 3.6. Also see requirements.txt. We used Stanford CoreNLP version 3.9.1.
 
 # Models and Data
-They can be downloaded from here: https://drive.google.com/drive/folders/1BJWpmRM-4qcn0vaFPo0k_xO5s-N9BMfS?usp=sharing
+They can be downloaded from here: https://drive.google.com/drive/folders/16NEL8T-JvhJPy7miVUbMELVE8ZOTYGit?usp=sharing
 
 There are 3 models in the above folder:
 
